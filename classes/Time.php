@@ -46,4 +46,9 @@ class Time {
     return round( $this->timestamp / $seconds ) * $seconds;
   }
 
+  public function threshold( int $seconds = 20 ): int
+  {
+    return $this->timestamp - $seconds;
+  }
+
 }

@@ -34,7 +34,7 @@ class App {
 
     $this->time = new Time();
     $this->ip = new Ip();
-    $this->storage = new Storage();
+    $this->storage = new Storage( $this->time, $this->ip );
 
     $this->reportPresence();
     // $this->checkCompanion();
