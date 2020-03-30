@@ -49,12 +49,12 @@ class App {
 
   public function reportPresence()
   {
-    $this->storage->reportPresence( $this->time );
+    $this->storage->reportPresence( $this->time, $this->ip );
   }
 
   public function checkCompanion()
   {
-    $this->storage->checkCompanion();
+    $this->storage->checkCompanion( $this->time, $this->ip );
   }
 
 }
