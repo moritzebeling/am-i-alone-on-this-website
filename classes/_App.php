@@ -4,6 +4,10 @@ require_once 'Ip.php';
 require_once 'Time.php';
 require_once 'Storage.php';
 
+function dump( $variable ){
+  echo '<pre>' . print_r($variable, true) . '</pre>';
+}
+
 class App {
 
   // Time

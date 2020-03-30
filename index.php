@@ -12,7 +12,4 @@ procedure
 */
 
 $app = new App();
-
-?>
-<pre>
-  <?php var_dump( $app ); ?>
+dump( $app );
