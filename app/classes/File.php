@@ -16,15 +16,15 @@ class File {
 
     $this->base = $_SERVER['DOCUMENT_ROOT'];
     $this->name = array_pop( $parts );
-    $this->path = $this->toPath( $parts );
+    $this->path = toPath( $parts );
 
-    $this->basePath = $this->toPath([
+    $this->basePath = toPath([
       $this->base, $this->path
     ]);
-    $this->pathName = $this->toPath([
+    $this->pathName = toPath([
       $this->path, $this->name
     ]);
-    $this->basePathName = $this->toPath([
+    $this->basePathName = toPath([
       $this->base, $this->path, $this->name
     ]);
 

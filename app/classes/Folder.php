@@ -1,7 +1,5 @@
 <?php
 
-require_once 'File.php';
-
 class Folder {
 
   // string
@@ -20,17 +18,17 @@ class Folder {
   {
     $parts = explode( '/', $pathname );
 
-    $this->base = $_SERVER['DOCUMENT_ROOT'];
+    $this->base = ROOT;
     $this->name = array_pop( $parts );
-    $this->path = $this->toPath( $parts );
+    $this->path = toPath( $parts );
 
-    $this->basePath = $this->toPath([
+    $this->basePath = toPath([
       $this->base, $this->path
     ]);
-    $this->pathName = $this->toPath([
+    $this->pathName = toPath([
       $this->path, $this->name
     ]);
-    $this->basePathName = $this->toPath([
+    $this->basePathName = toPath([
       $this->base, $this->path, $this->name
     ]);
 
@@ -38,12 +36,6 @@ class Folder {
 
     $this->scan();
 
-    echo 'construct ';
-  }
-
-  public function toPath( array $parts = [] ): string {
-    $parts = array_filter( $parts );
-    return implode('/', $parts );
   }
 
   public function create( string $path ): bool
@@ -61,17 +53,16 @@ class Folder {
 
   public function folder( string $name ): Folder
   {
-    return new Folder( $this->toPath([ $this->pathName, $name ]) );
+    return new Folder( toPath([ $this->pathName, $name ]) );
   }
 
   public function file( string $name ): File
   {
-    return new File( $this->toPath([ $this->pathName, $name ]) );
+    return new File( toPath([ $this->pathName, $name ]) );
   }
 
   public function scan()
   {
-    echo 'scan ';
     $items = scandir( $this->basePathName );
 
     $folders = [];
@@ -81,7 +72,7 @@ class Folder {
       if( substr($item, 0, 1) === '.' ){
         continue;
       }
-      $path = $this->toPath([ $this->basePathName, $item ]);
+      $path = toPath([ $this->basePathName, $item ]);
       if( is_dir( $path ) ){
         $folders[] = $item;
       } else if( is_file( $path ) ){

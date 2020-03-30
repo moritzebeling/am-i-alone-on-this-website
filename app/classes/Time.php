@@ -5,9 +5,8 @@ class Time {
   // int
   protected $timestamp;
 
-  public function __construct( int $timestamp = null, string $timezone = 'Europe/Berlin' )
+  public function __construct( int $timestamp = null )
   {
-    date_default_timezone_set( $timezone );
     if( $now === null ){
       $this->timestamp = time();
     } else {
