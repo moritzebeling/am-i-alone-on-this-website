@@ -24,7 +24,7 @@ class App {
     $this->ip = new Ip();
     $this->storage = new Storage();
 
-    // $this->reportPresence();
+    $this->reportPresence();
     // $this->checkCompanion();
 
   }
@@ -49,7 +49,7 @@ class App {
 
   public function reportPresence()
   {
-    $this->storage->reportPresence();
+    $this->storage->reportPresence( $this->time );
   }
 
   public function checkCompanion()
