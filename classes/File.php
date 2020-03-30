@@ -41,7 +41,7 @@ class File {
     if( is_file( $path ) ){
       return true;
     }
-    if ( mkdir( $path, 0777, true) ) {
+    if ( touch( $path ) ) {
       return true;
     } else {
       throw new Exception('Could not create ' . $path);

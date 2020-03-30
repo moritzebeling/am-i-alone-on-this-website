@@ -59,9 +59,14 @@ class Folder {
     }
   }
 
-  public function createFolder( string $name ): Folder
+  public function folder( string $name ): Folder
   {
     return new Folder( $this->toPath([ $this->pathName, $name ]) );
+  }
+
+  public function file( string $name ): File
+  {
+    return new File( $this->toPath([ $this->pathName, $name ]) );
   }
 
   public function scan()
@@ -69,13 +74,11 @@ class Folder {
     echo 'scan ';
     $items = scandir( $this->basePathName );
 
-    // dump( $items );
-
     $folders = [];
     $files = [];
 
     foreach( $items as $item ){
-      if( in_array( $item, ['.','..'] ) ){
+      if( substr($item, 0, 1) === '.' ){
         continue;
       }
       $path = $this->toPath([ $this->basePathName, $item ]);
@@ -88,6 +91,42 @@ class Folder {
 
     $this->folders = $folders;
     $this->files = $files;
+  }
+
+  public function folders(): array
+  {
+    if( empty( $this->folders ) ){
+      $this->scan();
+    }
+    return $this->folders;
+  }
+
+  public function files(): array
+  {
+    if( empty( $this->files ) ){
+      $this->scan();
+    }
+    return $this->files;
+  }
+
+  public function remove( string $dirname = null ): bool
+  {
+    if( $dirname === null ){
+      $dirname = $this->basePathName;
+    }
+    $dir_handle = opendir( $dirname );
+    while( $file = readdir( $dir_handle ) ) {
+      if( $file != "." && $file != ".." ) {
+        if( !is_dir( $dirname."/".$file ) ){
+          unlink( $dirname."/".$file );
+        } else {
+          delete_directory( $dirname.'/'.$file );
+        }
+      }
+    }
+    closedir( $dir_handle );
+    rmdir( $dirname );
+    return true;
   }
 
 }
