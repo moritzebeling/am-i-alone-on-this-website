@@ -1,8 +1,6 @@
 <?php
 
-require_once 'File.php';
-
-class Folder {
+class File {
 
   // string
   protected $base = '';         /* /base */
@@ -11,10 +9,6 @@ class Folder {
   protected $basePath = '';     /* /base/pa/th */
   protected $pathName = '';     /* pa/th/name */
   protected $basePathName = ''; /* /base/pa/th/name */
-
-  // array
-  protected $folders = [];
-  protected $files = [];
 
   public function __construct( string $pathname )
   {
@@ -35,10 +29,6 @@ class Folder {
     ]);
 
     $this->create( $this->basePathName );
-
-    $this->scan();
-
-    echo 'construct ';
   }
 
   public function toPath( array $parts = [] ): string {
@@ -48,7 +38,7 @@ class Folder {
 
   public function create( string $path ): bool
   {
-    if( is_dir( $path ) ){
+    if( is_file( $path ) ){
       return true;
     }
     if ( mkdir( $path, 0777, true) ) {
@@ -57,37 +47,6 @@ class Folder {
       throw new Exception('Could not create ' . $path);
       return false;
     }
-  }
-
-  public function createFolder( string $name ): Folder
-  {
-    return new Folder( $this->toPath([ $this->pathName, $name ]) );
-  }
-
-  public function scan()
-  {
-    echo 'scan ';
-    $items = scandir( $this->basePathName );
-
-    // dump( $items );
-
-    $folders = [];
-    $files = [];
-
-    foreach( $items as $item ){
-      if( in_array( $item, ['.','..'] ) ){
-        continue;
-      }
-      $path = $this->toPath([ $this->basePathName, $item ]);
-      if( is_dir( $path ) ){
-        $folders[] = $item;
-      } else if( is_file( $path ) ){
-        $files[] = $item;
-      }
-    }
-
-    $this->folders = $folders;
-    $this->files = $files;
   }
 
 }
