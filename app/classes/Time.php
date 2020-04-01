@@ -50,4 +50,12 @@ class Time {
     return $this->timestamp - $seconds;
   }
 
+  public function difference( int $timestamp = null ): int
+  {
+    if( $timestamp === null ){
+      $timestamp = time();
+    }
+    return $timestamp - $this->timestamp;
+  }
+
 }

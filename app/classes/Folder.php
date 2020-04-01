@@ -33,9 +33,6 @@ class Folder {
     ]);
 
     $this->create( $this->basePathName );
-
-    $this->scan();
-
   }
 
   public function create( string $path ): bool
@@ -61,6 +58,22 @@ class Folder {
     return new File( toPath([ $this->pathName, $name ]) );
   }
 
+  public function folders(): array
+  {
+    if( empty( $this->folders ) ){
+      $this->scan();
+    }
+    return $this->folders;
+  }
+
+  public function files(): array
+  {
+    if( empty( $this->files ) ){
+      $this->scan();
+    }
+    return $this->files;
+  }
+
   public function scan()
   {
     $items = scandir( $this->basePathName );
@@ -82,22 +95,6 @@ class Folder {
 
     $this->folders = $folders;
     $this->files = $files;
-  }
-
-  public function folders(): array
-  {
-    if( empty( $this->folders ) ){
-      $this->scan();
-    }
-    return $this->folders;
-  }
-
-  public function files(): array
-  {
-    if( empty( $this->files ) ){
-      $this->scan();
-    }
-    return $this->files;
   }
 
   public function remove( string $dirname = null ): bool

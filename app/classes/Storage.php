@@ -20,6 +20,7 @@ class Storage {
 
     $this->storage = new Folder('data');
     $this->cleanOld();
+
   }
 
   public function reportPresence()
@@ -31,10 +32,9 @@ class Storage {
   {
     $threshold = $this->time->threshold( $seconds );
 
-    $folders = $this->storage->folders();
-    foreach( $folders as $f ){
-      if( $f < $threshold ){
-        $this->storage->folder( $f )->remove();
+    foreach( $this->storage->folders() as $folder ){
+      if( $folder < $threshold ){
+        $this->storage->folder( $folder )->remove();
       }
     }
 
