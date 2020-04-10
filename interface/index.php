@@ -10,11 +10,11 @@ $app = new App();
     <title>Am I alone on this website?</title>
     <style>
       body {
-        background-color: #ccc;
+        background-color: #000;
         transition: background-color 1s ease;
       }
       body.alone {
-        background-color: #ccc;
+        background-color: #000;
       }
       body.companion {
         background-color: #fff;
@@ -22,7 +22,7 @@ $app = new App();
     </style>
     <script>
 
-      const id = '<?= $app->id; ?>';
+      const id = '<?= $app->id(); ?>';
 
       function setStatus( companions = 0 ){
         if( companions === 0 ){
@@ -36,37 +36,33 @@ $app = new App();
         }
       }
 
-      let request;
+      let httpRequest;
 
       function makeRequest() {
-        request = new XMLHttpRequest();
+        httpRequest = new XMLHttpRequest();
 
-        if (!request) {
+        if (!httpRequest) {
           alert('Giving up :( Cannot create an XMLHTTP instance');
           return false;
         }
-        request.onreadystatechange = alertContents;
-        request.open('GET', '/api.php?id='+id);
-        request.send();
+        httpRequest.onreadystatechange = alertContents;
+        httpRequest.open('GET', 'test.html');
+        httpRequest.send();
       }
 
       function alertContents() {
-        let companions;
-        if (request.readyState === XMLHttpRequest.DONE) {
-          if (request.status === 200) {
-            companions = request.responseText;
-            console.log( companions );
-            return companions;
+        if (httpRequest.readyState === XMLHttpRequest.DONE) {
+          if (httpRequest.status === 200) {
+            alert(httpRequest.responseText);
           } else {
-            console.error('There was a problem with the request.');
+            alert('There was a problem with the request.');
           }
         }
       }
 
       setInterval(()=>{
 
-        let check = makeRequest();
-        setStatus( check );
+        setStatus( Math.floor( Math.random() * 5 ) );
 
       }, 2000);
 

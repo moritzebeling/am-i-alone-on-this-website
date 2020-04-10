@@ -10,5 +10,3 @@ require_once 'functions.php';
 spl_autoload_register(function ($class_name) {
     require_once 'classes' .DS. $class_name . '.php';
 });
-
-$app = new App();
