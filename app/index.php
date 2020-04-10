@@ -1,5 +1,7 @@
 <?php
 
+// error_reporting(E_ALL);
+
 define( 'DS' , DIRECTORY_SEPARATOR );
 define( 'ROOT' , $_SERVER['DOCUMENT_ROOT'] );
 
@@ -10,3 +12,5 @@ require_once 'functions.php';
 spl_autoload_register(function ($class_name) {
     require_once 'classes' .DS. $class_name . '.php';
 });
+
+$app = new App();

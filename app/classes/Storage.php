@@ -54,7 +54,7 @@ class Storage {
       return false;
     }
   }
-  public function index( int $seconds = 10 ): array
+  public function index( int $seconds = 5 ): array
   {
     $this->companions = [];
 

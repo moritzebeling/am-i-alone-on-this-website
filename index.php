@@ -2,22 +2,20 @@
 
 require_once 'app/index.php';
 
-$app = new App();
-
 ?>
 <html>
   <head>
     <title>Am I alone on this website?</title>
     <style>
       body {
-        background-color: #ccc;
-        transition: background-color 1s ease;
-      }
-      body.alone {
-        background-color: #ccc;
+        background-color: #000;
+        transition-property: background-color;
+        transition-timing-function: ease;
+        transition-duration: 10s;
       }
       body.companion {
         background-color: #fff;
+        transition-duration: 1s;
       }
     </style>
     <script>
@@ -25,6 +23,7 @@ $app = new App();
       const id = '<?= $app->id; ?>';
 
       function setStatus( companions = 0 ){
+
         if( companions === 0 ){
           document.body.classList.remove('companion');
           document.body.classList.add('alone');
@@ -54,9 +53,8 @@ $app = new App();
         let companions;
         if (request.readyState === XMLHttpRequest.DONE) {
           if (request.status === 200) {
-            companions = request.responseText;
-            console.log( companions );
-            return companions;
+            setStatus( parseInt( request.responseText ) );
+
           } else {
             console.error('There was a problem with the request.');
           }
@@ -65,8 +63,7 @@ $app = new App();
 
       setInterval(()=>{
 
-        let check = makeRequest();
-        setStatus( check );
+        makeRequest();
 
       }, 2000);
 
