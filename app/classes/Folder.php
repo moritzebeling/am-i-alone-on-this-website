@@ -13,6 +13,8 @@ class Folder {
   // array
   protected $folders = [];
   protected $files = [];
+  protected $index = [];
+  protected $contents = [];
 
   public function __construct( string $pathname )
   {
@@ -97,6 +99,32 @@ class Folder {
     $this->files = $files;
   }
 
+  public function index(): array
+  {
+    $index = [];
+    foreach( $this->folders() as $f ){
+      $folder = new Folder( $this->pathName .'/'. $f );
+      $index[ $f ] = $folder->files();
+    }
+    $this->index = $index;
+    return $this->index;
+  }
+
+  public function contents(): array
+  {
+    $contents = [];
+    foreach( $this->folders() as $fo ){
+      $folder = new Folder( $this->pathName .'/'. $fo );
+      foreach ($folder->files() as $fi) {
+        if( !in_array( $fi, $contents ) ){
+          $contents[] = $fi;
+        }
+      }
+    }
+    $this->contents = $contents;
+    return $this->contents;
+  }
+
   public function remove( string $dirname = null ): bool
   {
     if( $dirname === null ){
@@ -108,7 +136,7 @@ class Folder {
         if( !is_dir( $dirname."/".$file ) ){
           unlink( $dirname."/".$file );
         } else {
-          delete_directory( $dirname.'/'.$file );
+          remove_directory( $dirname.'/'.$file );
         }
       }
     }

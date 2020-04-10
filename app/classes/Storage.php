@@ -10,7 +10,7 @@ class Storage {
   // Ip
   protected $ip;
 
-  // Directory
+  // Folder
   protected $storage;
 
   public function __construct( Time $time, Ip $ip )
@@ -28,9 +28,11 @@ class Storage {
     $this->storage->folder( $this->time->stamp() )->file( $this->ip->slug() );
   }
 
-  public function cleanOld( int $seconds = 20 )
+  public function cleanOld( int $seconds = 10 )
   {
     $threshold = $this->time->threshold( $seconds );
+
+
 
     foreach( $this->storage->folders() as $folder ){
       if( $folder < $threshold ){
@@ -42,7 +44,9 @@ class Storage {
 
   public function checkCompanion()
   {
-    echo 'checkCompanion()';
+    // echo "Index:";
+    // $index = $this->storage->contents();
+    // dump( $index );
   }
 
 }

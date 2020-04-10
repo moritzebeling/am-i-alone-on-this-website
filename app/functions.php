@@ -14,5 +14,5 @@ function dump( $variable ){
 
 function toPath( array $parts = [] ): string {
   $parts = array_filter( $parts );
-  return implode('/', $parts );
+  return implode(DS, $parts );
 }
