@@ -5,19 +5,19 @@ class Storage {
   // Time of visit
   protected $time;
 
-  // Ip of visitor
-  protected $ip;
+  // id of visitor
+  protected $id;
 
   // String with root path of `/data`
   protected $store;
 
-  // Array with ips
+  // Array with ids
   protected $companions;
 
-  public function __construct( Time $time, Ip $ip )
+  public function __construct( Time $time, $id )
   {
     $this->time = $time;
-    $this->ip = $ip;
+    $this->id = $id;
 
     $this->store = ROOT . DS . 'data';
 
@@ -43,7 +43,7 @@ class Storage {
       }
     }
 
-    $file = $folder . DS . $this->ip;
+    $file = $folder . DS . $this->id;
     if( is_file( $file ) ){
       return true;
     }
@@ -68,18 +68,18 @@ class Storage {
       if( $timeslot < $threshold ){
         $this->remove( $timeslot );
       } else {
-        $ips = scandir( $this->store . DS . $timeslot );
-        foreach( $ips as $ip ){
-          if( substr($ip, 0, 1) === '.' ){
+        $ids = scandir( $this->store . DS . $timeslot );
+        foreach( $ids as $id ){
+          if( substr($id, 0, 1) === '.' ){
             continue;
           }
-          if( in_array( $ip, $this->companions ) ){
+          if( in_array( $id, $this->companions ) ){
             continue;
           }
-          if( $ip === $this->ip ){
+          if( $id === $this->id ){
             continue;
           }
-          $this->companions[] = $ip;
+          $this->companions[] = $id;
         }
       }
     }
