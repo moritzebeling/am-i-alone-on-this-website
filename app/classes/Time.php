@@ -17,7 +17,7 @@ class Time {
 
   public function __toString(): string
   {
-    return $this->dateTime();
+    return $this->timestamp;
   }
 
   public function stamp(): int

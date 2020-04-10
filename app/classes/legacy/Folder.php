@@ -129,7 +129,15 @@ class Folder {
   {
     if( $dirname === null ){
       $dirname = $this->basePathName;
+    } else {
+      
     }
+
+    if( !is_dir( $dirname ) ){
+      echo 'Cannot delete '.$dirname.' ';
+      return false;
+    }
+
     $dir_handle = opendir( $dirname );
     while( $file = readdir( $dir_handle ) ) {
       if( $file != "." && $file != ".." ) {
